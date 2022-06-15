@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4 - Student 1</title>
+</head>
+<body>
+    <div id="interface">
+        <div id="menu"> 
+            <div>
+                <input id="pin-input" type="text" value="" placeholder="tast inn pinkode"></input>
+                <input id="confirm-btn" type="button" value="Ok">
+            </div>
+        </div>
+    
+        <div id="output-div">  
+        </div>
+    </div>
+    
+    <style type="text/css">
+
+        #interface{
+            margin: 0;
+            min-width: 100vh;
+            min-height: 100vh;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            
+        }
+
+        #menu > div:nth-of-type(2) {
+            display: flex;
+            justify-content: center;
+            margin: 1rem;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #menu > div:nth-of-type(3) {
+            display: flex;
+            justify-content: center;
+            margin: 1rem;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #output-div{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            width: 16rem;
+        }
+
+    </style>
+
+<script>
+    
+    var pinInput = document.getElementById('pin-input');
+    var confirmBtn = document.getElementById('confirm-btn');
+    var outputDiv = document.getElementById('output-div');
+    var menu = document.getElementById('menu');
+
+    var enhet = 'images/fem-hundre-kroner';
+    var pinCode = 1994;
+    var saldo = 4;
+
+    function logIn(){
+        
+        if (pinInput.value == pinCode){
+            showBalance();
+        } else {
+            alert('Feil pinkode');
+        }
+    }
+
+    function logout(){
+        outputDiv.innerHTML = ``;
+        menu.innerHTML= `<div>
+                <input id="pin-input" type="text" value="" placeholder="tast inn pinkode"></input>
+                <input id="confirm-btn" type="button" value="Ok">
+            </div>`;
+
+            pinInput = document.getElementById('pin-input');
+            confirmBtn = document.getElementById('confirm-btn');
+            confirmBtn.onclick = logIn;
+    }
+
+    function showBalance(){
+        outputDiv.innerHTML = ``;
+        
+        if(saldo < 0) {
+            alert('Du har blitt meldt på luksusfellen!');
+        }
+
+        for(var i = 0; i < saldo; i++){
+            outputDiv.innerHTML += `<div><img src='${enhet}.png'</img></div>`;
+        }
+        menu.innerHTML = `
+        <div>Din saldo er: ${saldo * 500}</div>
+        <div>
+            <select id="amount-select-withdraw">
+                <option>0</option>
+                <option value="1">500</option>
+                <option value="2">1000</option>
+                <option value="3">1500</option>
+                <option value="4">2000</option>
+            </select>
+            <input id="withdraw-btn" type="button" value="Ta ut penger"></input>
+        </div>
+        <div>
+            <select id="amount-select-add">
+                <option>0</option>
+                <option value="1">500</option>
+                <option value="2">1000</option>
+                <option value="3">1500</option>
+                <option value="4">2000</option>
+            </select>
+            <input id="addMoney-btn" type="button" value="Sett inn penger"></input>
+        </div>
+        <div>
+            <input id="logout-btn" type="button" value="Logg ut"></input>
+        </div>`
+
+    var withdrawBtn = document.getElementById('withdraw-btn');
+    withdrawBtn.onclick = withdrawMoney;
+
+    var withdrawBtn = document.getElementById('addMoney-btn');
+    withdrawBtn.onclick = addMoney;
+
+    var logOutBtn = document.getElementById('logout-btn');
+    logOutBtn.onclick = logout;
+    }
+
+    function withdrawMoney(){
+        
+        var amountSelect = document.getElementById('amount-select-withdraw');
+        newSaldo = saldo - Number(amountSelect.value);
+        saldo = newSaldo;
+
+        showBalance();
+
+    }
+
+    function addMoney(){
+        
+        var amountSelect = document.getElementById('amount-select-add');
+        newSaldo = saldo + Number(amountSelect.value);
+        saldo = newSaldo;
+
+        showBalance();
+       
+    }
+    
+    confirmBtn.onclick = logIn;
+    
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 2 - Dragracing</title>
+    <link rel="stylesheet" href="css/oppgave2.css">
+</head>
+<body>
+
+    <h1>Dragracing</h1>
+
+    <div id="road-div"></div>
+    
+    <img id="blue-car" src="images/blue-car.png">
+    <img id="green-car" src="images/green-car.png">
+    <img id="red-car" src="images/red-car.png">
+
+    <div id="finish-line"></div>
+
+    <div id="output-div"></div>
+        
+    <input id="start-race-btn" type="button" value="start race!">
+
+    <script>
+
+        /*
+            Henter inn HTML objekter
+        */
+        var outputDiv = document.getElementById('output-div');
+        var startRaceBtn = document.getElementById('start-race-btn');
+        var blueCar = document.getElementById('blue-car');
+        var greenCar = document.getElementById('green-car');
+        var redCar = document.getElementById('red-car');
+
+        /*
+            Oppretter to arrays: ett for hver bil og ett for distansen hver bil har kjørt.
+        */
+
+        var cars = [blueCar, greenCar, redCar];
+        var carDistance = [0, 0, 0];
+
+        var interval;
+
+        /* 
+            startRace oppdaterer interval-variablen med en setInterval på 2 sekunder.
+        */
+        
+        function startRace() {
+            interval = setInterval(updateAndCheckDistance, 2000);
+        }
+
+        /*
+            stopRace stopper interval slik at bilene stopper når funksjonene kjører.
+        */
+
+        function stopRace() {
+            
+            clearInterval(interval);
+            
+        }
+
+        /*
+            updateAndCheckDistance kjører en løkke for alle bilene i cars array. 
+            Løkken plusser et tilfeldig tall til den totale verdien av hvor langt bilen har kjørt.
+            Løkken sjekker også for hver gang om noen av bilene har kommet over målstreken. 
+            Når en bil har nåd målet, skrives det ut hvilken bil som har vunnet og kjører stopRace funsjonen.
+        */
+
+        function updateAndCheckDistance(){
+        for(var i = 0; i < cars.length; i++){    
+            carDistance[i] += Math.floor(Math.random() * 201 + 1);
+            cars[i].style.left = `${ carDistance[i] }px`;
+            if(carDistance[0] >= 700){
+                
+                outputDiv.innerHTML = `blue is the winner`;
+                stopRace();
+            }
+            
+                
+            } if(carDistance[1] >= 700){
+                
+                outputDiv.innerHTML = `green is the winner`;
+                stopRace();
+                
+                
+            } if(carDistance[2] >= 700){
+                outputDiv.innerHTML = `red is the winner`;
+                stopRace();
+                
+            }
+        }
+
+
+        /*
+            Initierer racet når man klikker på knappen (startRaceBtn).
+        */
+        startRaceBtn.onclick = startRace;
+        
+    
+    </script>
+
+</body>
+</html>

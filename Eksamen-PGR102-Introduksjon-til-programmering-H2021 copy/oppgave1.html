@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 1</title>
+    <link rel="stylesheet" type="text/css" href="css/oppgave1.css">
+</head>
+<body>
+
+    <!-- Det er lov å endre/legge til HTML -->
+    <h1>Modern Art Maker</h1>
+
+    <label>Bredde</label>    
+    <input id="width-txt" type="text">
+
+    <label>Høyde</label>
+    <input id="height-txt" type="text">
+
+    <hr>
+
+    <label>Farge</label>
+    <input id="background-color-txt" type="text">
+
+    <hr>
+
+    <label>Posisjon fra venstre (left)</label>
+    <input id="left-txt" type="text">
+
+    <label>Posisjon fra toppen (top)</label>
+    <input id="top-txt" type="text">
+
+    <hr>
+
+    <input id="add-box-btn" type="button" value="Legg til">
+    <input id="reset-btn" type="button" value="Fjern innhold">
+
+    <p id="status-p">Antall bokser lagt til: <span id="number-of-boxes">0</span></p>
+
+    <div id="output-div"></div>
+
+    <script>
+
+    /*
+		Henter inn HTML-objekter
+	*/
+
+    var width = document.getElementById('width-txt');
+    var height = document.getElementById('height-txt');
+    var backgroundColor = document.getElementById('background-color-txt');
+    var setLeft = document.getElementById('left-txt');
+    var setTop = document.getElementById('top-txt');
+    var numberOfBoxes = document.getElementById('number-of-boxes');
+    var outputDiv = document.getElementById('output-div');
+    var addBoxBtn = document.getElementById('add-box-btn');
+    var resetBtn = document.getElementById('reset-btn');
+
+    /*
+		Oppretter en variabel som fungerer som inkrementator for alle divs som printes ut. I tillegg holder den tellingen
+        over antall kunstverk som er skapt.
+	*/
+    
+    var boxIndex = 0;
+    
+    /*
+		Funksjonen makeArt:
+        
+        1) Sjekker først om bruker har skrevet inn nødvendige verdier.
+        2) Hvis ikke nødvendige verdier er gitt, får bruker beskjed om å fylle de inn.
+        3) Hvis verdiene er fylt inn, inkrementeres boxIndex.
+        4) En div opprettes inni outputDiv med boksIndex' verdi som id-navn for at det blir fler unike div-er. 
+        5) Vaiabel "styleDiv" opprettes og henter inn den nylig lagde div-en.
+        6) "styleDiv" blir stylet med de forskjellige verdiene gitt av bruker.
+        7) "numberOfBoxes printer ut hvor mange bokser som er blitt laget. 
+	*/
+
+    function makeArt(){
+
+        if(width.value < 1 || height.value < 1 || backgroundColor.value.length == 0){
+            alert('Kunsten din må inneholde bredde, høyde og farge for at verden skal være i stand til å se den');
+        } else {
+            
+            boxIndex++;
+        
+            outputDiv.innerHTML += `<div id='${boxIndex}'></div>`;
+            var styleDiv = document.getElementById(`${boxIndex}`);
+        
+            styleDiv.style.width = `${width.value}px`;
+            styleDiv.style.height = `${height.value}px`;
+            styleDiv.style.backgroundColor = `${backgroundColor.value}`;
+            styleDiv.style.left = `${setLeft.value}px`;
+            styleDiv.style.top = `${setTop.value}px`;
+            
+
+            numberOfBoxes.innerHTML = boxIndex;
+        }    
+    }
+
+    /*
+		Funksjonen resetArt:
+        
+        1) Tømmer innholdet i outputDiv, slik at kunstverket blir borte.
+        2) Resetter antall div-er tilbake til 0.
+	*/
+
+    function resetArt(){
+        outputDiv.innerHTML = ` `;
+        boxIndex = 0;
+        numberOfBoxes.innerHTML = boxIndex;
+    }
+
+    /*
+        Initierer funksjonene makeArt og resetArt når man klikker på de respektive knappene.
+	*/
+    
+    addBoxBtn.onclick = makeArt;
+    resetBtn.onclick = resetArt;
+    
+  
+    </script>
+
+    </body>
+</html>

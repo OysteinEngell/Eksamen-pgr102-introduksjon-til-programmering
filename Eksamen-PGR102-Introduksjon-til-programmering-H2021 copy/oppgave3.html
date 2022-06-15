@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 3 - Middelalderbygninger</title>
+</head>
+<body>
+
+    <!-- Det er lov å endre/legge til HTML -->
+
+    <h1>Middelalderbygninger</h1>
+    <p>Lyst til å bo i en middelalderbygning? Vi har de beste middelalderbygningene! :)</p>
+
+    <input id="show-all-btn" type="button" value="Vis alle">
+
+    <hr>
+
+    <label>Minimum pris</label>
+    <input type="text">
+    <label>Maksimum pris</label>
+    <input type="text">
+    <input type="button" value="Vis etter pris">
+
+    <hr>
+
+    <!-- Hint: Å hente value fra valgt <option> fungerer på samme måte som å hente value fra en tekstboks -->
+    <select id="category-select"><!-- Du endrer på options for å tilpasse til din løsning -->
+        <option>--Velg kategori--</option>
+        <option value="fungushus">fungushus</option>
+        <option value="losjement">losjement</option>
+        <option value="hoppeslott">hoppeslott</option>
+        <option value="kanal-tårn">kanal-tårn</option>
+    </select>
+    <input id="show-category-btn" type="button" value="Vis etter kategori">
+
+    <hr>
+    <p>Antall treff: <span id="number-of-results"> </span></p>
+    <div id="output-div">
+
+    </div>
+
+    <script>
+
+        /*
+            
+        */
+
+        var showAllBtn = document.getElementById('show-all-btn');
+        var showCategoryBtn = document.getElementById('show-category-btn');
+        var minPrice = document.querySelector('input:nth-of-type(2)');
+        var maxPrice = document.querySelector('input:nth-of-type(3)');
+        var filterByPrice = document.querySelector('input:nth-of-type(4)');
+        var categorySelect = document.getElementById('category-select');
+        var outputDiv = document.getElementById('output-div');
+        var numberOfResults = document.getElementById('number-of-results');
+       
+        countResults = 0;
+
+        
+
+        var buildingsArray = [
+            {"navn":"Primitivt Sopphus", "pris":500,  "bildenavn":"building-1", "kategori":"fungushus"},
+            {"navn":"Alminnelig Sopphus", "pris":750, "bildenavn":"building-2", "kategori":"fungushus"},
+            {"navn":"Luksus-Sopphus", "pris":1000, "bildenavn":"building-3", "kategori":"fungushus"},
+            {"navn":"Snurrebart-bygning", "pris":2000, "bildenavn":"building-4", "kategori":"losjement"},
+            {"navn":"Fyrsteborg", "pris":100000, "bildenavn":"building-5", "kategori":"hoppeslott"},
+            {"navn":"Gullplugg", "pris":20000, "bildenavn":"building-6", "kategori":"kanal-tårn"}
+        ]
+
+        console.log(categorySelect.value);
+        
+        function showAll(){
+			outputDiv.innerHTML = '';
+            countResults = 0;
+			for(var i = 0; i < buildingsArray.length; i++){
+                countResults++;
+				outputDiv.innerHTML += `
+					<article>
+						<h3>${ buildingsArray[i].navn }</h3>						
+						<p>Pris: ${ buildingsArray[i].pris }</p>
+						<img src="images/${ buildingsArray[i].bildenavn}.png"</img>
+						<p>Kategori: ${ buildingsArray[i].kategori }</p>
+					</article>
+				`;
+			}
+            numberOfResults.innerHTML = countResults;
+		}
+
+        function filterPrice(){
+            outputDiv.innerHTML = '';
+            countResults = 0;
+
+            if(Number(maxPrice.value) == 0){
+                console.log("maxPrice er 0");
+                maxPrice.value = 100000;
+            }
+
+            for(var i = 0; i < buildingsArray.length; i++){
+
+                if(Number(minPrice.value) <= buildingsArray[i].pris && Number(maxPrice.value) >= buildingsArray[i].pris){
+                    countResults++;
+                    outputDiv.innerHTML += `
+					<article>
+						<h3>${ buildingsArray[i].navn }</h3>						
+						<p>Pris: ${ buildingsArray[i].pris }</p>
+						<img src="images/${ buildingsArray[i].bildenavn}.png"</img>
+						<p>Kategori: ${ buildingsArray[i].kategori }</p>
+					</article>
+				`;
+                }
+			}
+            numberOfResults.innerHTML = countResults;
+        }
+
+        function filterCategory(){
+            
+            outputDiv.innerHTML = '';
+            countResults = 0;
+            console.log(categorySelect.value);
+
+            for(var i = 0; i < buildingsArray.length; i++){
+                
+                if(categorySelect.value == buildingsArray[i].kategori){
+                countResults++;
+                
+                console.log(buildingsArray[i].kategori)
+                outputDiv.innerHTML += `
+                <article>
+                    <h3>${ buildingsArray[i].navn }</h3>						
+                    <p>Pris: ${ buildingsArray[i].pris }</p>
+                    <img src="images/${ buildingsArray[i].bildenavn}.png"</img>
+                    <p>Kategori: ${ buildingsArray[i].kategori }</p>
+                </article>
+            `;
+            }
+			}
+            numberOfResults.innerHTML = countResults;
+        }
+
+        
+
+        showAllBtn.onclick = showAll;
+        filterByPrice.onclick = filterPrice;
+        showCategoryBtn.onclick = filterCategory;
+
+    </script>
+
+</body>
+</html>

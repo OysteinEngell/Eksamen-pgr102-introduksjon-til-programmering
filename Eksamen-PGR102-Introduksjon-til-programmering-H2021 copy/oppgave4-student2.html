@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4 - Student 2</title>
+</head>
+<body>
+
+    
+        <div id="results">
+            <div id="result-output">
+                <h2>Resultat</h2>
+            </div>
+            <div>
+                <p id="number-of-correct-answers">antall riktige: <span id="correctCount">0</span></p>
+                <p id="number-of-wrong-answers">antall feil: <span id="wrongCount">0</span></p>
+            </div>
+            
+        </div>
+        <div>
+            <h1 id="display-number"></h1>
+        </div>
+
+        
+        <div id="user-input-div">
+            <div>
+                <input id="play-btn" type="button" value="Start"></input>
+            </div>
+            
+            <input id="user-input" type="text" placeholder="Skriv inn riktig tall"></input>
+            <input id="submit-btn" type="button" value="Submit"></input> 
+        </div>
+        
+    
+
+
+    <style type="text/css">
+        
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #results{
+            width: 80%;
+            height: 75px;
+            margin: auto;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        
+
+        #display-number {
+            width: 80%;
+            height: 150px;
+            margin: auto;
+            margin-top: 20px;
+        }
+
+        h1{
+            text-align: center;
+            font-size: 100px;
+        }        
+
+        #user-input-div {
+            margin: auto;
+            width: 80%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        
+
+
+
+       
+    </style>
+
+        
+    
+    <script>
+        var startBtn = document.getElementById('play-btn');
+        var userInput = document.getElementById('user-input');
+        var submitBtn = document.getElementById('submit-btn');
+        var displayNumber = document.getElementById('display-number');
+        var numberOfCorrectAnswers = document.getElementById('correctCount');
+        var numberOfWrongAnswers = document.getElementById('wrongCount');
+        var resultFeedback = document.getElementById('result-output');
+        
+
+        var correctCount = 0;
+        var wrongCount = 0;
+
+        var randomNumber = 0;
+
+        
+
+        
+        function displayRandomNumber(number){
+            randomNumber = Math.floor(Math.random() * 1000000);
+            displayNumber.innerHTML = randomNumber;  
+            console.log(randomNumber); 
+        }
+
+        function removeNumber(){
+            displayNumber.innerHTML = "";
+        }
+
+        
+        function checkResult(){
+            console.log(userInput.value); 
+            if(Number(userInput.value) == randomNumber){
+                resultFeedback.innerHTML = '<h2>Gratulerer, det var riktig!</h2>';
+                correctCount++;
+                numberOfCorrectAnswers.innerHTML = correctCount;
+
+            } else {
+                resultFeedback.innerHTML = '<h2>Uflaks. Prøv igjen.</h2>';
+                wrongCount++;
+                numberOfWrongAnswers.innerHTML= wrongCount;
+            }
+            
+        }
+
+        
+        
+        function initGame(){
+        displayRandomNumber();
+        setTimeout(function() {removeNumber()}, 3000);
+        
+        }
+    
+        startBtn.onclick = initGame;
+        submitBtn.addEventListener("click",checkResult);
+        
+
+    </script>
+    
+</body>
+</html>
